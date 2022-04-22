@@ -1,0 +1,21 @@
+/* 全局演示表 */
+html,
+body,
+#app {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  min-width: 750px;
+}
+
+body {
+  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
