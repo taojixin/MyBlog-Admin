@@ -5,16 +5,23 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import {
   Message,
-  MessageBox,
   Form,
   FormItem,
   Option,
   Select,
   Input,
-  Button
+  Button,
+  Container,
+  Header,
+  Aside,
+  Main
 } from 'element-ui'
 
 // 全局注册
+Vue.use(Main)
+Vue.use(Aside)
+Vue.use(Header)
+Vue.use(Container)
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(Select)
@@ -24,4 +31,3 @@ Vue.use(Form)
 
 // 将Message放到Vue的原型上,后面可通过全局对象直接使用
 Vue.prototype.$message = Message
-Vue.prototype.$confirm = MessageBox.confirm

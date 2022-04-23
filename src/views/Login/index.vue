@@ -31,7 +31,11 @@
 </template>
 
 <script>
+import { loginAdmin } from "../../api/index";
 export default {
+  created() {
+
+  },
   data() {
     return {
       // 表单内容
@@ -42,7 +46,12 @@ export default {
       loginRules: {
         name: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
+          {
+            min: 3,
+            max: 15,
+            message: "长度在 3 到 15 个字符",
+            trigger: "blur",
+          },
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -64,22 +73,25 @@ export default {
     },
     // 登录按钮
     login() {
-          // 表单登录前的预验证,通过表单引用对象调用validate函数(第一个参数是一个布尔值,从而知道表单验证是否通过了)
+      // 表单登录前的预验证,通过表单引用对象调用validate函数(第一个参数是一个布尔值,从而知道表单验证是否通过了)
       this.$refs.loginFormRef.validate((isSuccess, field) => {
         // 校验不通过
         if (!isSuccess) {
-          return this.$message.error("信息填写不正确!") // 第二个参数为 未通过校验的字段
+          return this.$message.error("信息填写不正确!"); // 第二个参数为 未通过校验的字段
         }
+        const {name,password} = this.loginForm
         // 校验通过 发送请求
-
-
-        this.$message.success("登录成功")
-
-        // 通过路由导航挑战到后台页面
-        this.$router.push('/home')
-      })
-    }
-  }
+        loginAdmin(name,password).then((resolve) => {
+          this.$message.success("登录成功");
+          // 通过路由导航挑战到后台页面
+          this.$router.push("/home");
+        }).catch(error => {
+          console.log(error);
+          return this.$message.error("登录失败：", error)
+        });
+      });
+    },
+  },
 };
 </script>
 
