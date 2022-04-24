@@ -8,6 +8,9 @@ const requests = axios.create({
 
 // 请求拦截器
 requests.interceptors.request.use(config => {
+  if (localStorage.getItem('adminToken')) {
+    config.headers.token = localStorage.getItem("adminToken")
+  }
   // config: 配置对象，里面有一个熟悉很重要，headers请求头
   return config
 })

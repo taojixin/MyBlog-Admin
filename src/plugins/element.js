@@ -14,10 +14,18 @@ import {
   Container,
   Header,
   Aside,
-  Main
+  Main,
+  Menu,
+  Submenu,
+  MenuItem,
+  MenuItemGroup
 } from 'element-ui'
 
 // 全局注册
+Vue.use(MenuItemGroup)
+Vue.use(MenuItem)
+Vue.use(Submenu)
+Vue.use(Menu)
 Vue.use(Main)
 Vue.use(Aside)
 Vue.use(Header)

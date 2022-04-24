@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { loginAdmin } from "../../api/index";
+import { loginAdmin } from "../api/index";
 export default {
   created() {
 
@@ -40,8 +40,8 @@ export default {
     return {
       // 表单内容
       loginForm: {
-        name: "",
-        password: "",
+        name: "admin",
+        password: "t18581766104",
       },
       loginRules: {
         name: [
@@ -72,23 +72,25 @@ export default {
       this.$refs.loginFormRef.resetFields();
     },
     // 登录按钮
-    login() {
+     login() {
       // 表单登录前的预验证,通过表单引用对象调用validate函数(第一个参数是一个布尔值,从而知道表单验证是否通过了)
-      this.$refs.loginFormRef.validate((isSuccess, field) => {
+      this.$refs.loginFormRef.validate(async (isSuccess, field) => {
         // 校验不通过
         if (!isSuccess) {
           return this.$message.error("信息填写不正确!"); // 第二个参数为 未通过校验的字段
         }
         const {name,password} = this.loginForm
         // 校验通过 发送请求
-        loginAdmin(name,password).then((resolve) => {
-          this.$message.success("登录成功");
+        const {data} = await loginAdmin(name,password)
+        // 保存token到localStorage中
+        localStorage.setItem('adminToken', data.token)
+        if (data.code === 0) {
+          this.$message.success("登录成功！");
           // 通过路由导航挑战到后台页面
           this.$router.push("/home");
-        }).catch(error => {
-          console.log(error);
-          return this.$message.error("登录失败：", error)
-        });
+          return 
+        }
+        return this.$message.error("密码错误！")
       });
     },
   },
