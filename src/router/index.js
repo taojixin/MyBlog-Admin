@@ -10,6 +10,7 @@ import ModifyMes from '@/views/message/ModifyMes'
 import ManageNote from '@/views/note/ManageNote'
 import ModifyNote from '@/views/note/ModifyNote'
 import AddNote from '@/views/note/AddNote'
+import DeleteNote from '@/views/note/DeleteNote'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,7 @@ const routes = [
       { path: '/managenote', component: ManageNote },
       { path: '/modifynote', component: ModifyNote },
       { path: '/addnote', component: AddNote },
+      { path: '/deletenote', component: DeleteNote },
     ]
   },
 ]

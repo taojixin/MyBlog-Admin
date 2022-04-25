@@ -1,6 +1,7 @@
 // 对API进行统一管理
 import requests from "./request";
 
+// 登录admin
 const loginAdmin = async (name, password) => {
   return await requests({url: '/login', method: 'post', data: {
     name,
@@ -19,9 +20,14 @@ const uploadNote = async (noteMessage) => {
     data: noteMessage
   })
 }
+// 获取全部笔记(不包括内容)
+const getAllNote = async () => {
+  return await requests.get('/getallnote')
+}
 
 export {
   loginAdmin,
   getSortList,
-  uploadNote
+  uploadNote,
+  getAllNote
 }

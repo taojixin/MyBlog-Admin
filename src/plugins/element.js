@@ -18,10 +18,16 @@ import {
   Menu,
   Submenu,
   MenuItem,
-  MenuItemGroup
+  MenuItemGroup,
+  Table,
+  TableColumn,
+  Pagination
 } from 'element-ui'
 
 // 全局注册
+Vue.use(Pagination)
+Vue.use(TableColumn)
+Vue.use(Table)
 Vue.use(MenuItemGroup)
 Vue.use(MenuItem)
 Vue.use(Submenu)

@@ -29,6 +29,7 @@
             <el-menu-item index="managenote">管理笔记</el-menu-item>
             <el-menu-item index="modifynote">修改笔记</el-menu-item>
             <el-menu-item index="addnote">添加笔记</el-menu-item>
+            <el-menu-item index="deletenote">删除笔记</el-menu-item>
           </el-submenu>
           <!-- 留言管理 -->
           <el-submenu index="3">
