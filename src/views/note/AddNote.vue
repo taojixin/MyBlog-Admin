@@ -104,7 +104,6 @@ export default {
         if (isSuccess) {
           this.noteForm['createtime'] = formatTime()
           const result = await uploadNote(this.noteForm)
-          console.log(result);
 
           this.$message.success("提交成功");
           this.$refs.noteFormRef.resetFields();

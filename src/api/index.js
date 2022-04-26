@@ -24,10 +24,33 @@ const uploadNote = async (noteMessage) => {
 const getAllNote = async () => {
   return await requests.get('/getallnote')
 }
+// 根据页数条数查询笔记
+const getSomeNote = async (num, page) => {
+  return await requests({
+    method: 'post',
+    url: '/getsomenote',
+    data: {
+      note_page: page,
+      note_num: num
+    }
+  })
+}
+// 删除笔记
+const deleteNote = async (id) => {
+  return await requests({
+    method: 'delete',
+    url: '/deletenote',
+    data: {
+      id
+    }
+  })
+}
 
 export {
   loginAdmin,
   getSortList,
   uploadNote,
-  getAllNote
+  getAllNote,
+  deleteNote,
+  getSomeNote
 }
