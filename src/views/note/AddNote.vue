@@ -47,7 +47,7 @@
 
 <script>
 import { getSortList, uploadNote } from "@/api/index";
-import {formatTime} from '@/utils'
+import { formatTime } from "@/utils";
 
 export default {
   created() {
@@ -102,11 +102,14 @@ export default {
     noteSubmit() {
       this.$refs.noteFormRef.validate(async (isSuccess) => {
         if (isSuccess) {
-          this.noteForm['createtime'] = formatTime()
-          const result = await uploadNote(this.noteForm)
-
-          this.$message.success("提交成功");
-          this.$refs.noteFormRef.resetFields();
+          this.noteForm["createtime"] = formatTime();
+          const result = await uploadNote(this.noteForm);
+          if (result.data == 0) {
+            this.$message.success("提交成功");
+            this.$refs.noteFormRef.resetFields();
+          } else {
+            this.$message.error("提交失败：可能内容过长");
+          }
         } else {
           this.$message.error("提交失败");
         }
