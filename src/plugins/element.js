@@ -21,10 +21,22 @@ import {
   MenuItemGroup,
   Table,
   TableColumn,
-  Pagination
+  Pagination,
+  Descriptions,
+  DescriptionsItem,
+  Tag,
+  Radio,
+  RadioGroup,
+  DatePicker
 } from 'element-ui'
 
 // 全局注册
+Vue.use(DatePicker)
+Vue.use(RadioGroup)
+Vue.use(Radio)
+Vue.use(Tag)
+Vue.use(Descriptions)
+Vue.use(DescriptionsItem)
 Vue.use(Pagination)
 Vue.use(TableColumn)
 Vue.use(Table)

@@ -1,12 +1,15 @@
 <template>
   <el-container class="home-container">
+    <!-- 顶部 -->
     <el-header>
       <h1>后台管理系统</h1>
     </el-header>
+    <!-- 中间 -->
     <el-container class="content-container">
+      <!-- 左侧 -->
       <el-aside width="200px">
         <el-menu
-          default-active="2"
+          default-active="showintroduce"
           class="el-menu-vertical-demo"
           :unique-opened="true"
           :router="true"
@@ -15,10 +18,10 @@
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-user"></i>
-              <span>个人信息管理</span>
+              <span>个人介绍管理</span>
             </template>
-            <el-menu-item index="1-1" >选项1</el-menu-item>
-            <el-menu-item index="1-1">选项1</el-menu-item>
+            <el-menu-item index="showintroduce">个人信息</el-menu-item>
+            <el-menu-item index="modifyintr">修改信息</el-menu-item>
           </el-submenu>
           <!-- 笔记管理 -->
           <el-submenu index="2">
@@ -42,6 +45,7 @@
           </el-submenu>
         </el-menu>
       </el-aside>
+      <!-- 右侧 -->
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -52,12 +56,9 @@
 <script>
 export default {
   data() {
-    return {
-
-    }
+    return {};
   },
-  methods: {
-  }
+  methods: {},
 };
 </script>
 
@@ -65,18 +66,24 @@ export default {
 .home-container {
   width: 1200px;
   margin: 0 auto;
-  height: 100vh;
+  height: 100%;
   border: 1px solid pink;
   background-color: #93a0b8;
-}
-.el-header {
-  background-color: #b1c5ea;
-  display: flex;
-  h1 {
-    margin: 0;
+  overflow: hidden;
+
+  .content-container {
+    width: 100%;
+    .el-header {
+      background-color: #b1c5ea;
+      display: flex;
+      h1 {
+        margin: 0;
+      }
+    }
+    .el-main {
+      background-color: #dee5f3;
+      width: 100%;
+    }
   }
-}
-.el-main {
-  background-color: #dee5f3;
 }
 </style>
