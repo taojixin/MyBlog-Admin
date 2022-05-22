@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 
 import Login from '@/views/Login.vue'
 import Home from '@/views/Home.vue'
-import Welcome from '@/views/Welcome.vue'
 
 // 个人介绍
 import ShowIntroduce from '@/views/introduce/ShowIntroduce'
@@ -15,10 +14,12 @@ import ManageMes from '@/views/message/ManageMes'
 import ModifyMes from '@/views/message/ModifyMes'
 
 // 笔记管理
-import ManageNote from '@/views/note/ManageNote'
 import ModifyNote from '@/views/note/ModifyNote'
 import AddNote from '@/views/note/AddNote'
-import DeleteNote from '@/views/note/DeleteNote'
+
+// Demo 管理
+import AddDemo from '@/views/demo/AddDemo'
+import ModifyDemo from '@/views/demo/ModifyDemo'
 
 Vue.use(VueRouter)
 
@@ -28,15 +29,17 @@ const routes = [
   {
     path: '/home', component: Home, children: [
       { path: '/', redirect: '/showintroduce' },
-      { path: '/welcome', component: Welcome },
       { path: '/managemes', component: ManageMes },
       { path: '/modifymes', component: ModifyMes },
-      { path: '/managenote', component: ManageNote },
+
       { path: '/modifynote', component: ModifyNote },
       { path: '/addnote', component: AddNote },
-      { path: '/deletenote', component: DeleteNote },
+
       { path: '/showintroduce', component: ShowIntroduce },
       { path: '/modifyintr', component: ModifyIntroduce },
+      
+      { path: '/adddemo', component: AddDemo },
+      { path: '/modifydemo', component: ModifyDemo },
 
     ]
   },

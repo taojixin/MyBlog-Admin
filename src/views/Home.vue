@@ -23,19 +23,26 @@
             <el-menu-item index="showintroduce">个人信息</el-menu-item>
             <el-menu-item index="modifyintr">修改信息</el-menu-item>
           </el-submenu>
-          <!-- 笔记管理 -->
+          <!-- demo管理 -->
           <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-files"></i>
+              <span>Demo 管理</span>
+            </template>
+            <el-menu-item index="modifydemo">修改 Demo</el-menu-item>
+            <el-menu-item index="adddemo">添加 Demo</el-menu-item>
+          </el-submenu>
+          <!-- 笔记管理 -->
+          <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-edit"></i>
               <span>笔记管理</span>
             </template>
-            <el-menu-item index="managenote">管理笔记</el-menu-item>
             <el-menu-item index="modifynote">修改笔记</el-menu-item>
             <el-menu-item index="addnote">添加笔记</el-menu-item>
-            <el-menu-item index="deletenote">删除笔记</el-menu-item>
           </el-submenu>
           <!-- 留言管理 -->
-          <el-submenu index="3">
+          <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-s-comment"></i>
               <span>留言管理</span>

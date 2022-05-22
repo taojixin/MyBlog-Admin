@@ -8,6 +8,8 @@ const loginAdmin = async (name, password) => {
     password
   }})
 }
+
+// 登录模块
 // 获取笔记分类列表
 const getSortList = async () => {
   return await requests.get('/getsortlist')
@@ -46,11 +48,59 @@ const deleteNote = async (id) => {
   })
 }
 
+// demo模块
+// 获取全部demo信息
+const getDemoAll = async () => {
+  return await requests({
+    method: 'post',
+    url: '/getdemo',
+    data: {
+      getId: 0 
+    }
+  })
+}
+// 添加demo信息
+const addDemo = async (addMessage) => {
+  return requests({
+    method: 'post',
+    url: '/adddemo',
+    data: {
+      addMessage
+    }
+  })
+}
+
+// 个人介绍模块
+// 获取个人所有信息
+const getMyIntroduce = async (queryKey) => {
+  return requests({
+    method: 'post',
+    url: '/getintroduce',
+    data: {
+      queryKey
+    }
+  })
+}
+// 修改个人全部信息
+const updateAll = async (personalForm) => {
+  return requests({
+    method: 'post',
+    url: '/updateallintro',
+    data: {
+      personalForm
+    }
+  })
+}
+
 export {
   loginAdmin,
   getSortList,
   uploadNote,
   getAllNote,
   deleteNote,
-  getSomeNote
+  getSomeNote,
+  getDemoAll,
+  addDemo,
+  getMyIntroduce,
+  updateAll
 }
