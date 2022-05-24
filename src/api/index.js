@@ -3,10 +3,12 @@ import requests from "./request";
 
 // 登录admin
 const loginAdmin = async (name, password) => {
-  return await requests({url: '/login', method: 'post', data: {
-    name,
-    password
-  }})
+  return await requests({
+    url: '/login', method: 'post', data: {
+      name,
+      password
+    }
+  })
 }
 
 // 登录模块
@@ -55,7 +57,17 @@ const getDemoAll = async () => {
     method: 'post',
     url: '/getdemo',
     data: {
-      getId: 0 
+      getId: 0
+    }
+  })
+}
+// 查询某个demo信息
+const geDemoSome = async (getId) => {
+  return requests({
+    method: 'post',
+    url: '/getdemo',
+    data: {
+      getId
     }
   })
 }
@@ -66,6 +78,29 @@ const addDemo = async (addMessage) => {
     url: '/adddemo',
     data: {
       addMessage
+    }
+  })
+}
+// 删除demo
+const deleteDemo = async (demoId) => {
+  return requests({
+    method: 'delete',
+    url: '/deledemo',
+    data: {
+      demoId
+    }
+  })
+}
+// 修改demo
+const modifyDemo = async (demoId, demo_describe, demo_knowledge, demo_code) => {
+  return await requests({
+    method: "post",
+    url: '/modifydemo',
+    data: {
+      demoId,
+      demo_describe,
+      demo_knowledge,
+      demo_code
     }
   })
 }
@@ -102,5 +137,8 @@ export {
   getDemoAll,
   addDemo,
   getMyIntroduce,
-  updateAll
+  updateAll,
+  deleteDemo,
+  geDemoSome,
+  modifyDemo
 }

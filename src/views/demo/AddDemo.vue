@@ -78,6 +78,7 @@ export default {
           message.time = formatTime();
           addDemo(message).then((res) => {
             this.$message.success("提交成功！");
+            this.$refs.demoRef.resetFields();
           }).catch(err => {
             this.$message.error("提交失败！");
           })
