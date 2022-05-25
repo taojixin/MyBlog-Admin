@@ -87,7 +87,7 @@
 const {
   getDemoAll,
   deleteDemo,
-  geDemoSome,
+  getDemoSome,
   modifyDemo,
 } = require("@/api/index");
 export default {
@@ -126,18 +126,26 @@ export default {
     };
   },
   async created() {
-    this.demoData = await getDemoAll();
+    const data = await getDemoAll();
+    console.log(data);
+    const newData = data.map((value) => {
+      value.demo_createtime = value.demo_createtime.slice(0,16).replace('T',' ')
+      return value
+    })
+    this.demoData = newData
+    
   },
   methods: {
     // 查看demo
     async checkDemo(id) {
-      this.someData = await geDemoSome(id);
+      const data = await getDemoSome(id);
+      this.someData = data[0]
       this.checkDiaVisible = true;
     },
     // 修改demo
     async modifyDemo(id) {
-      this.someData = await geDemoSome(id);
-      console.log(this.someData);
+      const data = await getDemoSome(id);
+      this.someData = data[0]
       this.modifykDiaVisible = true;
     },
     // 删除demo

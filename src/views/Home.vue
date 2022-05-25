@@ -47,7 +47,6 @@
               <i class="el-icon-s-comment"></i>
               <span>留言管理</span>
             </template>
-            <el-menu-item index="modifymes">修改留言</el-menu-item>
             <el-menu-item index="managemes">管理留言</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -62,10 +61,17 @@
 
 <script>
 export default {
+  created() {
+  },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    jump(path) {
+      console.log("dsfs");
+      this.$router.push(path)
+    }
+  },
 };
 </script>
 

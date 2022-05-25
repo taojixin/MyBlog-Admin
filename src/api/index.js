@@ -1,6 +1,7 @@
 // 对API进行统一管理
 import requests from "./request";
 
+// 登录模块
 // 登录admin
 const loginAdmin = async (name, password) => {
   return await requests({
@@ -11,7 +12,7 @@ const loginAdmin = async (name, password) => {
   })
 }
 
-// 登录模块
+// 笔记模块
 // 获取笔记分类列表
 const getSortList = async () => {
   return await requests.get('/getsortlist')
@@ -49,6 +50,26 @@ const deleteNote = async (id) => {
     }
   })
 }
+// 根据id查询某个笔记
+const getOneNote = async (noteId) => {
+  return requests({
+    method: 'post',
+    url: '/getonenote',
+    data: {
+      noteId
+    }
+  })
+}
+// 修改某个笔记
+const modifyTheNote = async (id, note_title, note_describe, note_content, note_sort) => {
+  return requests({
+    method: 'post',
+    url: '/modifynote',
+    data: {
+      id, note_title, note_describe, note_content, note_sort
+    }
+  })
+}
 
 // demo模块
 // 获取全部demo信息
@@ -62,7 +83,7 @@ const getDemoAll = async () => {
   })
 }
 // 查询某个demo信息
-const geDemoSome = async (getId) => {
+const getDemoSome = async (getId) => {
   return requests({
     method: 'post',
     url: '/getdemo',
@@ -127,6 +148,35 @@ const updateAll = async (personalForm) => {
   })
 }
 
+// 评论模块
+// 根据page与num获取
+const getSomeComments = (page,num) => {
+  return requests({
+    method:'post',
+    url: '/getsomecomments',
+    data: {
+      page,num
+    }
+  })
+}
+// 获取评论数量
+const getCommentTotal = () => {
+  return requests({
+    method: 'get',
+    url: '/getcommenttotal'
+  })
+}
+// 删除某条评论
+const deleteMes = (delId) => {
+  return requests({
+    method: 'delete',
+    url: '/delsomecomment',
+    data: {
+      delId
+    }
+  })
+}
+
 export {
   loginAdmin,
   getSortList,
@@ -139,6 +189,11 @@ export {
   getMyIntroduce,
   updateAll,
   deleteDemo,
-  geDemoSome,
-  modifyDemo
+  getDemoSome,
+  modifyDemo,
+  getSomeComments,
+  getCommentTotal,
+  deleteMes,
+  getOneNote,
+  modifyTheNote
 }

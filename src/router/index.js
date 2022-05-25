@@ -11,7 +11,6 @@ import ModifyIntroduce from '@/views/introduce/ModifyIntroduce'
 
 // 留言管理
 import ManageMes from '@/views/message/ManageMes'
-import ModifyMes from '@/views/message/ModifyMes'
 
 // 笔记管理
 import ModifyNote from '@/views/note/ModifyNote'
@@ -30,7 +29,6 @@ const routes = [
     path: '/home', component: Home, children: [
       { path: '/', redirect: '/showintroduce' },
       { path: '/managemes', component: ManageMes },
-      { path: '/modifymes', component: ModifyMes },
 
       { path: '/modifynote', component: ModifyNote },
       { path: '/addnote', component: AddNote },
