@@ -12,7 +12,12 @@
       <el-table-column label="操作">
         <template slot-scope="scoped">
           <!-- 查看demo按钮 -->
-          <el-tooltip effect="dark" content="查看" placement="top">
+          <el-tooltip
+            effect="dark"
+            :enterable="false"
+            content="查看"
+            placement="top"
+          >
             <el-button
               size="mini"
               type="primary"
@@ -20,8 +25,27 @@
               @click="checkDemo(scoped.row.id)"
             ></el-button>
           </el-tooltip>
+          <!-- 添加图片按钮 -->
+          <el-tooltip
+            effect="dark"
+            :enterable="false"
+            content="图片"
+            placement="top"
+          >
+            <el-button
+              size="mini"
+              type="success"
+              icon="el-icon-picture-outline"
+              @click="imageDemo(scoped.row.id)"
+            ></el-button>
+          </el-tooltip>
           <!-- 修改demo信息按钮 -->
-          <el-tooltip effect="dark" content="修改" placement="top">
+          <el-tooltip
+            effect="dark"
+            :enterable="false"
+            content="修改"
+            placement="top"
+          >
             <el-button
               size="mini"
               type="info"
@@ -30,7 +54,12 @@
             ></el-button>
           </el-tooltip>
           <!-- 删除demo按钮 -->
-          <el-tooltip effect="dark" content="删除" placement="top">
+          <el-tooltip
+            effect="dark"
+            :enterable="false"
+            content="删除"
+            placement="top"
+          >
             <el-button
               size="mini"
               type="danger"
@@ -53,7 +82,7 @@
       </span>
     </el-dialog>
     <!-- 修改对话框 -->
-    <el-dialog title="代码" :visible.sync="modifykDiaVisible" width="60%">
+    <el-dialog title="修改" :visible.sync="modifykDiaVisible" width="60%">
       <el-form
         ref="demoform"
         :rules="demoRules"
@@ -80,6 +109,34 @@
         <el-button type="primary" @click="submit()">修 改</el-button>
       </span>
     </el-dialog>
+    <!-- 图片对话框 -->
+    <el-dialog
+      class="dialogimg"
+      title="图片"
+      :visible.sync="imageDiaVisible"
+      width="60%"
+    >
+      <div class="dialogbox">
+        <span class="message-img">展示图片：</span>
+        <!-- <img src="../../assets/Headportrait.jpg" alt="" /> -->
+        <img :src="demoImgUrl" alt="" />
+        <span class="upload-img">上传图片：</span>
+        <el-upload
+          class="upload-demoimg"
+          action="/admin/demoimg"
+          :data="uploadData"
+          :multiple="false"
+          name="avatar"
+          :on-success="uploadSuccess"
+        >
+          <el-button size="small" type="primary">点击上传</el-button>
+        </el-upload>
+        <span slot="footer" class="dialog-img">
+          <el-button @click="imageDiaVisible = false">取 消</el-button>
+          <el-button type="primary" @click="isOk">确 定</el-button>
+        </span>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -101,6 +158,8 @@ export default {
       checkDiaVisible: false,
       // 修改 对话框的显示与隐藏
       modifykDiaVisible: false,
+      // 图片对话框的显示与隐藏
+      imageDiaVisible: false,
       // 表单验证规则
       demoRules: {
         demo_describe: [
@@ -123,32 +182,39 @@ export default {
         ],
         demo_code: [{ required: true, message: "请输入代码", trigger: "blur" }],
       },
+      // 上传图片携带的参数
+      uploadData: {
+        demo_id: null,
+      },
+      // 图片路径
+      demoImgUrl: "",
     };
   },
   async created() {
     const data = await getDemoAll();
     console.log(data);
     const newData = data.map((value) => {
-      value.demo_createtime = value.demo_createtime.slice(0,16).replace('T',' ')
-      return value
-    })
-    this.demoData = newData
-    
+      value.demo_createtime = value.demo_createtime
+        .slice(0, 16)
+        .replace("T", " ");
+      return value;
+    });
+    this.demoData = newData;
   },
   methods: {
-    // 查看demo
+    // 查看demo按钮
     async checkDemo(id) {
       const data = await getDemoSome(id);
-      this.someData = data[0]
+      this.someData = data[0];
       this.checkDiaVisible = true;
     },
-    // 修改demo
+    // 修改demo按钮
     async modifyDemo(id) {
       const data = await getDemoSome(id);
-      this.someData = data[0]
+      this.someData = data[0];
       this.modifykDiaVisible = true;
     },
-    // 删除demo
+    // 删除demo按钮
     deleteDemo(id) {
       this.$confirm("此操作将永久删除该demo, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -175,14 +241,19 @@ export default {
     },
     // 对话框中的修改按钮
     submit() {
-      this.$refs.demoform.validate(async valid => {
+      this.$refs.demoform.validate(async (valid) => {
         if (valid) {
-          modifyDemo(this.someData.id,this.someData.demo_describe,this.someData.demo_knowkedge,this.someData.demo_code)
-            .then(resolve => {
+          modifyDemo(
+            this.someData.id,
+            this.someData.demo_describe,
+            this.someData.demo_knowkedge,
+            this.someData.demo_code
+          )
+            .then((resolve) => {
               this.modifykDiaVisible = false;
               this.$message.success("修改成功！");
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
               this.$message.error("修改失败！");
             });
@@ -191,9 +262,70 @@ export default {
         }
       });
     },
+    // 查看上传图片按钮
+    imageDemo(id) {
+      console.log(id);
+      this.imageDiaVisible = true;
+      this.uploadData.demo_id = id;
+      this.demoImgUrl = `/admin/getdemoimg?demo_id=${id}`;
+    },
+    // 图片上传成功时
+    uploadSuccess() {
+      this.$message.success("图片上传成功！刷新后在查看");
+    },
+    //
+    isOk() {
+      this.imageDiaVisible = false;
+      this.$router.go(0);
+    },
   },
 };
 </script>
 
-<style>
+<style lang="less">
+.dialogimg {
+  min-width: 680px;
+  .dialogbox {
+    min-width: 680px;
+    position: relative;
+    height: 300px;
+
+    .message-img {
+      position: absolute;
+      font-size: 20px;
+      top: 40%;
+      transform: translateY(-50%);
+      color: #409eff;
+    }
+    img {
+      position: absolute;
+      left: 100px;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 100px;
+      height: 100px;
+    }
+    .upload-img {
+      position: absolute;
+      font-size: 20px;
+      top: 40%;
+      transform: translateY(-50%);
+      color: #409eff;
+      left: 40%;
+    }
+    .upload-demoimg {
+      position: absolute;
+      left: 55%;
+      top: 40%;
+      transform: translateY(-50%);
+    }
+
+    .dialog-img {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
 </style>

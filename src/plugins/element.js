@@ -31,9 +31,11 @@ import {
   MessageBox,
   Tooltip,
   Dialog,
+  Upload,
 } from 'element-ui'
 
 // 全局注册
+Vue.use(Upload)
 Vue.use(Dialog)
 Vue.use(Tooltip)
 Vue.use(DatePicker)
