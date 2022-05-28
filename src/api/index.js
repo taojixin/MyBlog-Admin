@@ -113,7 +113,7 @@ const deleteDemo = async (demoId) => {
   })
 }
 // 修改demo
-const modifyDemo = async (demoId, demo_describe, demo_knowledge, demo_code) => {
+const modifyDemo = async (demoId, demo_describe, demo_knowledge, demo_code, path) => {
   return await requests({
     method: "post",
     url: '/modifydemo',
@@ -121,7 +121,8 @@ const modifyDemo = async (demoId, demo_describe, demo_knowledge, demo_code) => {
       demoId,
       demo_describe,
       demo_knowledge,
-      demo_code
+      demo_code,
+      path
     }
   })
 }

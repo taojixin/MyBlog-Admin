@@ -5,9 +5,11 @@
       <el-table-column type="index" label="#" width="60"> </el-table-column>
       <el-table-column prop="demo_describe" label="描述" width="200">
       </el-table-column>
-      <el-table-column prop="demo_knowkedge" label="知识点" width="250">
+      <el-table-column prop="demo_knowkedge" label="知识点" width="200">
       </el-table-column>
-      <el-table-column prop="demo_createtime" label="时间" width="200">
+      <el-table-column prop="path" label="路径" width="100">
+      </el-table-column>
+      <el-table-column prop="demo_createtime" label="时间" width="150">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scoped">
@@ -95,6 +97,9 @@
         <el-form-item label="知识点" prop="demo_knowkedge">
           <el-input v-model="someData.demo_knowkedge"></el-input>
         </el-form-item>
+        <el-form-item label="路径" prop="path">
+          <el-input v-model="someData.path"></el-input>
+        </el-form-item>
         <el-form-item label="代码" prop="demo_code">
           <el-input
             type="textarea"
@@ -106,7 +111,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="modifykDiaVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submit()">修 改</el-button>
+        <el-button type="primary" @click="submit">修 改</el-button>
       </span>
     </el-dialog>
     <!-- 图片对话框 -->
@@ -181,6 +186,15 @@ export default {
           },
         ],
         demo_code: [{ required: true, message: "请输入代码", trigger: "blur" }],
+        path: [
+          { required: true, message: "请输入路径", trigger: "blur" },
+          {
+            min: 3,
+            max: 50,
+            message: "长度在 3 到 50 个字符",
+            trigger: "blur",
+          },
+        ]
       },
       // 上传图片携带的参数
       uploadData: {
@@ -190,9 +204,13 @@ export default {
       demoImgUrl: "",
     };
   },
-  async created() {
-    const data = await getDemoAll();
-    console.log(data);
+  created() {
+    this.getAllDemo()
+  },
+  methods: {
+    // 获取demo全部信息
+    async getAllDemo() {
+      const data = await getDemoAll();
     const newData = data.map((value) => {
       value.demo_createtime = value.demo_createtime
         .slice(0, 16)
@@ -200,8 +218,7 @@ export default {
       return value;
     });
     this.demoData = newData;
-  },
-  methods: {
+    },
     // 查看demo按钮
     async checkDemo(id) {
       const data = await getDemoSome(id);
@@ -247,10 +264,12 @@ export default {
             this.someData.id,
             this.someData.demo_describe,
             this.someData.demo_knowkedge,
-            this.someData.demo_code
+            this.someData.demo_code,
+            this.someData.path
           )
             .then((resolve) => {
               this.modifykDiaVisible = false;
+              this.getAllDemo()
               this.$message.success("修改成功！");
             })
             .catch((error) => {
@@ -264,7 +283,6 @@ export default {
     },
     // 查看上传图片按钮
     imageDemo(id) {
-      console.log(id);
       this.imageDiaVisible = true;
       this.uploadData.demo_id = id;
       this.demoImgUrl = `/admin/getdemoimg?demo_id=${id}`;
@@ -273,7 +291,7 @@ export default {
     uploadSuccess() {
       this.$message.success("图片上传成功！刷新后在查看");
     },
-    //
+    // 图片上传对话框的确定按钮
     isOk() {
       this.imageDiaVisible = false;
       this.$router.go(0);
